@@ -96,8 +96,8 @@ app.post('/api/login', (req, res) => {
 // List Media Route (Fetch from MongoDB)
 app.get('/api/media', async (req, res) => {
     try {
-        const images = await ImageModel.find().sort({ uploadDate: -1 });
-        const videos = await VideoModel.find().sort({ uploadDate: -1 });
+        const images = await ImageModel.find().sort({ uploadDate: 1 });
+        const videos = await VideoModel.find().sort({ uploadDate: 1 });
 
         res.json({
             success: true,
