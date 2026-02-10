@@ -188,9 +188,12 @@ app.post('/api/upload/complete', async (req, res) => {
         const ext = path.extname(originalName).toLowerCase();
         let NewMediaModel = null;
 
-        if (['.jpg', '.jpeg', '.png', '.heic'].includes(ext)) {
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.heic', '.webp', '.avif', '.heif'];
+        const videoExtensions = ['.mp4', '.mov', '.move', '.m4v', '.qt'];
+
+        if (imageExtensions.includes(ext)) {
             NewMediaModel = ImageModel;
-        } else if (['.mp4', '.mov'].includes(ext)) {
+        } else if (videoExtensions.includes(ext)) {
             NewMediaModel = VideoModel;
         }
 
@@ -210,8 +213,8 @@ app.post('/api/upload/complete', async (req, res) => {
     }
 });
 
-// Upload Route (Upload to S3 & Save to MongoDB)
-app.post('/api/upload', upload.array('files', 10), async (req, res) => {
+// Upload Route (Upload to S3 & Save to MongoDB) - Increased to 100 files
+app.post('/api/upload', upload.array('files', 100), async (req, res) => {
     console.log('Upload request received');
 
     if (!req.files || req.files.length === 0) {
@@ -226,9 +229,12 @@ app.post('/api/upload', upload.array('files', 10), async (req, res) => {
             const ext = path.extname(file.originalname).toLowerCase();
             let NewMediaModel = null;
 
-            if (['.jpg', '.jpeg', '.png', '.heic'].includes(ext)) {
+            const imageExtensions = ['.jpg', '.jpeg', '.png', '.heic', '.webp', '.avif', '.heif'];
+            const videoExtensions = ['.mp4', '.mov', '.move', '.m4v', '.qt'];
+
+            if (imageExtensions.includes(ext)) {
                 NewMediaModel = ImageModel;
-            } else if (['.mp4', '.mov'].includes(ext)) {
+            } else if (videoExtensions.includes(ext)) {
                 NewMediaModel = VideoModel;
             }
 
